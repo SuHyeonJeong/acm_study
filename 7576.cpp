@@ -37,7 +37,7 @@ int BFS()
 			}
 		}
 
-		for (int s = 0; s < N; s++)
+		/*for (int s = 0; s < N; s++)
 		{
 			for (int t = 0; t < M; t++)
 			{
@@ -45,7 +45,7 @@ int BFS()
 			}
 			cout << endl;
 		}
-		cout << endl;
+		cout << endl;*/
 
 		q.pop();
 
