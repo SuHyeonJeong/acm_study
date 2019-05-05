@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 const int dx[] = { 0, 0, -1, 1 };
@@ -8,11 +9,9 @@ int N, M;
 const int MAX = 1001;
 int map[MAX][MAX];
 queue <pair<int, int>> q;
-int blank = 0;
 
 int BFS()
 {
-	int cnt = 0;
 
 	if (q.empty())
 	{
@@ -21,9 +20,11 @@ int BFS()
 
 	while (!q.empty())
 	{
-		cnt++;
 		int y = q.front().first;
 		int x = q.front().second;
+
+		q.pop();
+
 
 		for (int j = 0; j < 4; j++)
 		{
@@ -32,47 +33,30 @@ int BFS()
 
 			if (next_y >= 0 && next_y < N && next_x >= 0 && next_x < M && map[next_y][next_x] == 0)
 			{
-				map[next_y][next_x] = 1;
+				map[next_y][next_x] = map[y][x] + 1;
 				q.push(make_pair(next_y, next_x));
 			}
 		}
 
-		/*for (int s = 0; s < N; s++)
-		{
-			for (int t = 0; t < M; t++)
-			{
-				cout << map[s][t] << " ";
-			}
-			cout << endl;
-		}
-		cout << endl;*/
 
-		q.pop();
-
-		if (q.size() == 0)
+		
+	
+	}
+	
+	int mx = -1;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
 		{
-			int tomato_cnt = 0;
-			for (int i = 0; i < M; i++)
-			{
-				for (int j = 0; j < N; j++)
-				{
-					if (map[i][j] == 1)
-					{
-						tomato_cnt++;
-					}
-				}
-			}
-			if (tomato_cnt == N * M - blank)
-			{
-				return cnt;
-			}
-			else
+			if (map[i][j] == 0)
 			{
 				return -1;
 			}
+			mx = max(mx, map[i][j]);
 		}
-	
 	}
+
+	return mx - 1;
 }
 int main()
 {
@@ -88,14 +72,11 @@ int main()
 			{
 				q.push(make_pair(i,j));
 			}
-			else if (map[i][j] == -1)
-			{
-				blank++;
-			}
+			
 		}
 	}
 
 
-	cout << BFS();
+	cout << BFS() << "\n";
 	return 0;
 }
