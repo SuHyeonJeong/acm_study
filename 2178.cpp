@@ -42,12 +42,9 @@ void BFS()
 
 		}
 		
-		
-
-		
 	}
 
-	for (int y = 0; y < N; y++)
+	/*for (int y = 0; y < N; y++)
 	{
 		for (int x = 0; x < M; x++)
 		{
@@ -55,7 +52,7 @@ void BFS()
 		}
 		cout << "\n";
 	}
-	cout << "\n";
+	cout << "\n";*/
 
 	cout << map[N-1][M-1] << "\n";
 }
