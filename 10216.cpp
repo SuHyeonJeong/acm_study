@@ -4,37 +4,41 @@
 using namespace std;
 
 int T, N; //N : 적군 진영의 숫자
-bool visit[3001];
 
-queue<pair<int, int>> q;
+queue<int> q;
 vector<pair<int, int>> v;
 int r[3001];
+vector<vector<int>> link; //인접한 진영
+bool visit[3001];
 
-vector<int> answer;
+int cnt;
 
-void BFS(int idx)
+int getDistance(int x1, int y1, int x2, int y2)
 {
-	visit[idx] = true;
-	q.push(v[idx]);
+	int d =pow(x1 - x2, 2) + pow(y1 - y2, 2);
+	return d;
+}
 
+void BFS()
+{
 	while (!q.empty())
 	{
-		int x = q.front().first;
-		int y = q.front().second;
-
+		int cur = q.front();
 		q.pop();
+		visit[cur] = true;
 
-		for (int i = 0; i < v.size(); i++)
+		for (int i = 0; i < link[cur].size(); i++)
 		{
-			if (!visit[i] && (pow((x - v[i].first), 2) + pow((y - v[i].second), 2) <= pow((r[idx] + r[i]), 2)))
+			if (!visit[link[cur][i]])
 			{
-				visit[i] = true;
-				q.push(make_pair(v[i].first, v[i].second));
+				visit[link[cur][i]] = true;
+				q.push(link[cur][i]);
 			}
 		}
-
 	}
+	
 }
+
 int main()
 {
 	ios_base::sync_with_stdio(false);
@@ -42,33 +46,54 @@ int main()
 
 	for (int t = 0; t < T; t++)
 	{
-		v.clear();
-
 		cin >> N;
 		int x, y, R;
-		int cnt = 0;
+		cnt = 0;
+
+
 		for (int i = 0; i < N; i++)
 		{
-			cin >> x >> y >> R; //R : 통신 가능 거리
+			visit[i] = false;
+		}
+		v.clear();
+		link.clear();
+		link.resize(3001);
+
+
+		for (int i = 0; i < N; i++)
+		{
+			cin >> x >> y >> r[i];
 			v.push_back(make_pair(x, y));
 		}
-		
+
+		for (int i = 0; i < N; i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				if (i != j)//서로 다른 진영일 때
+				{
+					if (pow(r[i] + r[j],2) >= getDistance(v[i].first, v[j].first, v[i].second, v[j].second)) //두 진영 거리가 통신가능 거리보다 작거나 같을 때
+					{
+						link[i].push_back(j);
+					}
+				}
+			}
+		}
+
 		for (int i = 0; i < N; i++)
 		{
 			if (!visit[i])
 			{
-				BFS(i);
+				q.push(i);
+				BFS();
 				cnt++;
 			}
 		}
+
+		cout << cnt << "\n";
 		
-		answer.push_back(cnt);
 	}
 
-	for (int i = 0; i < answer.size(); i++)
-	{
-		cout << answer[i] << "\n";
-	}
 
 	return 0;
 }
