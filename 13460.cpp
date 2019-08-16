@@ -40,7 +40,7 @@ int BFS()
 		//이때, 파란 구슬이 구멍에 들어가면 안 된다.
 		//각각의 동작에서 공은 동시에 움직인다.빨간 구슬이 구멍에 빠지면 성공이지만, 파란 구슬이 구멍에 빠지면 실패이다.
 		//빨간 구슬과 파란 구슬이 동시에 구멍에 빠져도 실패이다.
-		if (map[cur.ry][cur.rx] == '0' && map[cur.by][cur.bx] != '0')
+		if (map[cur.ry][cur.rx] == 'O' && map[cur.by][cur.bx] != 'O')
 		{
 			ret = cur.cnt;
 			break;
@@ -57,7 +57,7 @@ int BFS()
 			//빨간공의 움직임
 			while (1)
 			{
-				if (map[n_ry][n_rx] != '#' && map[n_ry][n_rx] != '0')
+				if (map[n_ry][n_rx] != '#' && map[n_ry][n_rx] != 'O')
 				{
 					n_ry += dy[i];
 					n_rx += dx[i];
@@ -77,7 +77,7 @@ int BFS()
 			//파란공의 움직임
 			while (1)
 			{
-				if (map[n_by][n_bx] != '#' && map[n_by][n_bx] != '0')
+				if (map[n_by][n_bx] != '#' && map[n_by][n_bx] != 'O')
 				{
 					n_by += dy[i];
 					n_bx += dx[i];
@@ -96,7 +96,7 @@ int BFS()
 			//빨간 구슬과 파란 구슬은 동시에 같은 칸에 있을 수 없다.
 			if (n_ry == n_by && n_rx == n_bx)
 			{
-				if (map[n_ry][n_rx] != '0')
+				if (map[n_ry][n_rx] != 'O')
 				{
 					int red_dist = abs(n_ry - cur.ry) + abs(n_rx - cur.rx);
 					int blue_dist = abs(n_by - cur.by) + abs(n_bx - cur.bx);
