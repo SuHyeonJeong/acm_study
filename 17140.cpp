@@ -32,7 +32,7 @@ void R()
 		}
 		for (int j = start+1; j <= col; j++)
 		{
-			if (arr[i][j] == 0)
+			if (arr[i][j] == 0 || j > 100)
 				continue;
 			bool flag = false;
 			for (int k = 0; k < v.size(); k++)
@@ -73,16 +73,9 @@ void R()
 			
 		}
 
-		for (int j = tempcol + 1; j < 101; j++)
+		for (int j = tempcol+1; j < 101; j++)
 		{
-			if (arr[i][j] == 0)
-			{
-				break;
-			}
-			else
-			{
-				arr[i][j] = 0;
-			}
+			arr[i][j] = 0;
 		}
 	}
 
@@ -115,7 +108,7 @@ void C()
 		
 		for (int j = start+1; j <= row; j++) //맨앞이 0이면 start+1부터 시작해서 1부터 못넣음
 		{
-			if (arr[j][i] == 0)
+			if (arr[j][i] == 0 || j > 100)
 				continue;
 			bool flag = false;
 			for (int k = 0; k < v.size(); k++)
@@ -158,14 +151,7 @@ void C()
 
 		for (int j = temprow + 1; j < 101; j++)
 		{
-			if (arr[j][i] == 0)
-			{
-				break;
-			}
-			else
-			{
-				arr[j][i] = 0;
-			}
+			arr[j][i] = 0;
 		}
 	}
 
@@ -197,7 +183,7 @@ int main()
 			break;
 		}
 
-		if (time > 100)
+		if (time >= 100)
 		{
 			cout << -1 << "\n";
 			return 0;
